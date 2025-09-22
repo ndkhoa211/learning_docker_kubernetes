@@ -1,0 +1,19 @@
+services:
+  mongodb:
+    image: 'mongo'
+    volumes:
+      - data:/data/db
+    # environment:
+    #   # - MONGO_INITDB_ROOT_USERNAME=khoa
+    #   MONGO_INITDB_ROOT_USERNAME: khoa
+    #   MONGO_INITDB_ROOT_PASSWORD: nguyen
+    env_file:
+      - ./env/mongo.env
+    # networks:
+    #   - goals-net
+  # backend:
+
+  # frontend:
+
+volumes:
+  data:
