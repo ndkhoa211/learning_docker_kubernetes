@@ -2,7 +2,7 @@ services:
   mongodb:
     image: 'mongo'
     volumes:
-      - data:/data/db
+      - data:/data/db      # named volume
     # environment:
     #   # - MONGO_INITDB_ROOT_USERNAME=khoa
     #   MONGO_INITDB_ROOT_USERNAME: khoa
@@ -11,9 +11,26 @@ services:
       - ./env/mongo.env
     # networks:
     #   - goals-net
-  # backend:
-
+  backend:
+    # image: 'goals-node'
+    build: ./backend
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    #   args:        # this in for ARG in Dockerfile
+    #     some-arg: some-value
+    ports:
+      - '80:80'
+    volumes:
+      - logs:/app/logs      # named volume
+      - ./backend:/app      # bind mounts
+      - /app/node_modules   # anonymous volume
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
   # frontend:
 
-volumes:
+volumes:        # for named volumes
   data:
+  logs:
